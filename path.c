@@ -24,14 +24,13 @@ char *_which(char *prmCommandName)
 
 	tmpPaths = paths;
 
-	if (prmCommandName[0] == '.' && prmCommandName[1] == '/' && stat(prmCommandName, &st) == 0)
+	if (prmCommandName[0] == '.' && prmCommandName[1] == '/'
+			&& stat(prmCommandName, &st) == 0)
 		return (prmCommandName);
 
 	while (tmpPaths != NULL)
-	{
-		absolutePath = _generateAbsolutePath(tmpPaths, prmCommandName);
+	{	absolutePath = _generateAbsolutePath(tmpPaths, prmCommandName);
 
-		/* Check if absolute path exist */
 		if (stat(absolutePath, &st) == 0)
 		{
 			_freeList(paths);
@@ -42,7 +41,6 @@ char *_which(char *prmCommandName)
 	}
 	_freeList(paths);
 
-	/* Try to find the command */
 	if (stat(prmCommandName, &st) == 0)
 	{
 		return (prmCommandName);
@@ -70,8 +68,7 @@ char *_generateAbsolutePath(environment_t *prmPaths, char *prmCommandName)
 	lastCharacter = prmPaths->value[pathValueSize - 1];
 
 	if (lastCharacter != '/')
-	{
-		tmp = prmPaths->value;
+	{	tmp = prmPaths->value;
 		prmPaths->value = _str_concat(tmp, "/");
 		free(tmp);
 	}
